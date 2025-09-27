@@ -86,8 +86,8 @@ alias ga='git add'
 alias gaa='git add -A'
 alias gc='git commit -m'
 alias gca='git commit -am'
-alias gco='git switch'
-alias gcb='git switch -c'
+alias gsw='git switch'
+alias gswc='git switch -c'
 alias gb='git branch -vv'
 alias gm='git merge'
 alias gr='git rebase'
@@ -123,6 +123,8 @@ alias psg='ps aux | grep -v grep | grep -i'
 alias please='sudo $(fc -ln -1)' # Run last command with sudo
 alias cls='clear && ls'
 alias hgrep='history | grep'
+alias tree3='tree -L 3 -I "node_modules|__pycache__|.git|.venv|env|venv|build|dist"'
+alias treed='tree -D -I "node_modules|__pycache__|.git|.venv|env|venv|build|dist"'
 
 # --- Development / utilities ---
 alias npmg='npm list -g --depth=0'
@@ -130,6 +132,12 @@ alias serve='python3 -m http.server'
 alias myip='curl -s ifconfig.me'
 alias v='nvim'
 alias j='journalctl -xe'
+
+# --- Programming dirs ---
+alias weba='cd ~/projects/web/astro && ls'
+alias webe='cd ~/projects/web/11ty && ls'
+alias webr='cd ~/projects/web/react && ls'
+alias webn='cd ~/projects/web/next && ls'
 
 # --- Completion system ---
 autoload -Uz compinit
@@ -148,3 +156,9 @@ zstyle ':completion:*' menu select
 if command -v neofetch >/dev/null 2>&1; then
   neofetch
 fi
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
