@@ -78,6 +78,29 @@ if [ -d "$DOTFILES_DIR/config" ]; then
     echo ""
 fi
 
+# 3. Link Firefox configurations (to active Firefox profile folder)
+if [ -d "$DOTFILES_DIR/firefox" ]; then
+    echo -e "${BLUE}--> Processing Firefox configurations:${NC}"
+    # Find any active Firefox profile directory matching default-release or default in standard paths
+    profile_dir=$(find "$HOME/.mozilla/firefox" "$HOME/.config/mozilla/firefox" -maxdepth 1 -type d \( -name "*.default-release" -o -name "*.default" \) 2>/dev/null | head -n 1)
+    
+    if [ -n "$profile_dir" ]; then
+        if [ -f "$DOTFILES_DIR/firefox/user.js" ]; then
+            link_item "$DOTFILES_DIR/firefox/user.js" "$profile_dir/user.js" "firefox/user.js"
+        else
+            echo "firefox/user.js file not found."
+        fi
+        
+        # Link chrome directory (for userChrome.css customizations)
+        if [ -d "$DOTFILES_DIR/firefox/chrome" ]; then
+            link_item "$DOTFILES_DIR/firefox/chrome" "$profile_dir/chrome" "firefox/chrome"
+        fi
+    else
+        echo "No active Firefox profile directory (.default-release or .default) found under ~/.mozilla/firefox"
+    fi
+    echo ""
+fi
+
 # Print summary
 echo ""
 if [ $conflict_detected -eq 1 ]; then

@@ -1,0 +1,21 @@
+/* =========================================================================
+   userChrome.css - Custom UI Tweaks for Firefox
+   =========================================================================
+   To enable this, ensure that "toolkit.legacyUserProfileCustomizations.stylesheets" 
+   is set to true in your user.js (already done in this dotfiles setup).
+*/
+
+/* -------------------------------------------------------------------------
+   HIDE NATIVE TAB BAR (Useful for Sidebery users)
+   -------------------------------------------------------------------------
+   Uncomment the block below ONLY if you use Sidebery (or a similar Tree Style 
+   Tabs extension) and want to hide the top horizontal tab bar completely.
+   WARNING: Do not uncomment this if you use normal top tabs, otherwise 
+   you won't be able to switch tabs!
+*/
+
+/*
+#TabsToolbar {
+    visibility: collapse !important;
+}
+*/
