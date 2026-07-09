@@ -1,0 +1,26 @@
+[include]
+    # Include local config for name and email to avoid leaking them in a public repo
+    path = ~/.gitconfig.local
+
+[init]
+    defaultBranch = main
+
+[core]
+    editor = nano
+    pager = less -F -X
+
+[color]
+    ui = auto
+
+[pull]
+    rebase = false
+
+[push]
+    autoSetupRemote = true
+
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit

@@ -1,0 +1,26 @@
+# Tokens, passwords, ssh keys
+.ssh/
+.gnupg/
+.aws/
+.npmrc
+.env
+
+# Local git config to avoid leaking personal email/name
+.gitconfig.local
+
+# Command history
+.bash_history
+.zsh_history
+.python_history
+.mysql_history
+
+# Caches and temporary files
+.cache/
+*.swp
+*.bak
+*~
+.DS_Store
+
+# Local configs that shouldn't be shared
+.zprofile.local
+.zshrc.local
