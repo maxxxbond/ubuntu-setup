@@ -6,8 +6,17 @@
     defaultBranch = main
 
 [core]
-    editor = nano
-    pager = less -F -X
+    editor = nvim
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    light = false
+    side-by-side = true
+    line-numbers = true
 
 [color]
     ui = auto

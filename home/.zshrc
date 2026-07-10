@@ -35,31 +35,15 @@ zinit light zsh-users/zsh-syntax-highlighting
 # %n=user %m=machine %2~=current and parent dir only %=orange symbol
 PROMPT='%F{green}%n@%m%f %F{cyan}%2~%f %F{208}$%f '
 
-# --- Git Aliases ---
+# --- Git & Lazygit ---
 alias g='git'
 alias gs='git status -sb'
-alias ga='git add'
-alias gaa='git add -A'
-alias gc='git commit -m'
-alias gca='git commit -am'
-alias gsw='git switch'
-alias gswc='git switch -c'
-alias gb='git branch -vv'
-alias gm='git merge'
-alias gr='git rebase'
-alias gp='git push'
-alias gpf='git push --force-with-lease'
-alias gpl='git pull --ff-only'
-alias gplr='git pull --rebase'
 alias gd='git diff'
 alias gds='git diff --staged'
-alias grs='git restore'
-alias grss='git restore --staged'
 alias gl='git log --oneline -10'
-alias glg='git log --graph --oneline --decorate --all'
-alias gst='git stash push'
-alias gstp='git stash pop'
-alias greset='git reset --hard'
+alias gp='git push'
+alias gpl='git pull --ff-only'
+alias lg='lazygit'
 
 # --- System Aliases ---
 alias sudo='sudo '
@@ -107,6 +91,25 @@ command -v fnm >/dev/null && eval "$(fnm env --use-on-cd)"
 command -v uv >/dev/null && eval "$(uv generate-shell-completion zsh)"
 command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
+# --- Fuzzy Finder (fzf) Integration ---
+if command -v fzf >/dev/null; then
+    [[ -f /usr/share/fzf/key-bindings.zsh ]] && source /usr/share/fzf/key-bindings.zsh
+    [[ -f /usr/share/fzf/completion.zsh ]] && source /usr/share/fzf/completion.zsh
+    
+    export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --color=dark"
+    export FZF_DEFAULT_COMMAND="fd --type f --strip-cwd-prefix --hidden --follow --exclude .git"
+    export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+    
+    # Interactive fzf branch switcher
+    gswb() {
+        local branch
+        branch=$(git branch -a | grep -v 'HEAD ->' | fzf --prompt="Switch Branch: " | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+        if [[ -n "$branch" ]]; then
+            git switch "$branch"
+        fi
+    }
+fi
+
 # --- Cheat Sheet / Help helper ---
 dothelp() {
     local BLUE=$'\e[1;34m'
@@ -115,17 +118,14 @@ dothelp() {
 
     echo "${BLUE}=== Zsh Aliases & Shortcuts Cheat Sheet ===${NC}"
     echo ""
-    echo "${CYAN}Git Shortcuts:${NC}"
+    echo "${CYAN}Git & Lazygit Shortcuts:${NC}"
     echo "  g         ➜ git"
     echo "  gs        ➜ status -sb"
-    echo "  ga / gaa  ➜ add / add all"
-    echo "  gc / gca  ➜ commit -m / commit -am"
-    echo "  gsw / gswc➜ switch / switch & create"
-    echo "  gp / gpf  ➜ push / push force-with-lease"
-    echo "  gpl / gplr➜ pull fast-forward / pull rebase"
     echo "  gd / gds  ➜ diff / diff staged"
-    echo "  gl / glg  ➜ log latest 10 / log graph"
-    echo "  gst / gstp➜ stash / stash pop"
+    echo "  gl        ➜ log latest 10"
+    echo "  gp / gpl  ➜ push / pull fast-forward"
+    echo "  lg        ➜ launch lazygit"
+    echo "  gswb      ➜ fuzzy switch git branch (fzf)"
     echo ""
     echo "${CYAN}System Utilities:${NC}"
     echo "  ll / la   ➜ ls -alF / ls -A (using eza if installed)"
@@ -146,3 +146,6 @@ if command -v fastfetch >/dev/null 2>&1; then
   fastfetch
   printf '\e[?7h' # Enable line wrap
 fi
+
+# --- Local / Host-Specific Configurations ---
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

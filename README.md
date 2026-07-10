@@ -39,3 +39,8 @@ Check out the `scripts/` folder to quickly provision a new system:
 - `setup_ssh.sh`: Generates an SSH key for GitHub.
 - `install_packages.sh`: Installs base apps like Discord, Telegram, VSCodium, and terminal tools.
 - `update_system.sh`: Quick alias for updating Pacman and AUR packages.
+
+## Recommended Apps
+
+- **handy**: A global, offline speech-to-text / voice dictation tool (install via AUR: `yay -S handy` after completing the system setup and configuring the AUR helper).
+

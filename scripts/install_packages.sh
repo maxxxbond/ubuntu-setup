@@ -26,9 +26,24 @@ PACKAGES=(
     "signal-desktop"
     "code"
     "zoxide"
+    "eza"
+    "bat"
+    "fd"
+    "fzf"
+    "git-delta"
+    "btop"
 )
 
 echo "Executing: $PKG_MGR ${PACKAGES[*]}"
 $PKG_MGR "${PACKAGES[@]}"
+
+# Install Neovim, Git, Make, Ripgrep, LazyGit, and Node.js (for LSP servers)
+sudo pacman -S --needed --noconfirm neovim git make ripgrep lazygit nodejs npm
+
+# Install a Nerd Font for UI icon support (required)
+sudo pacman -S --needed --noconfirm ttf-jetbrains-mono-nerd
+git clone --depth 1 https://github.com/AstroNvim/template ~/.config/nvim
+
+gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrainsMono Nerd Font 11'
 
 echo "Installation complete!"

@@ -49,10 +49,35 @@ link_item() {
     echo -e "${GREEN}[ LINKED   ]${NC} $relative_name linked to $target_path"
 }
 
+# Helper function to check system dependencies
+check_dependencies() {
+    echo -e "${BLUE}--> Checking system dependencies:${NC}"
+    local missing=()
+    local tools=("zsh" "git" "eza" "bat" "fzf" "zoxide" "lazygit" "delta")
+    
+    for tool in "${tools[@]}"; do
+        if command -v "$tool" &>/dev/null; then
+            echo -e "  [ ${GREEN}FOUND   ${NC} ] $tool"
+        else
+            echo -e "  [ ${RED}MISSING ${NC} ] $tool"
+            missing+=("$tool")
+        fi
+    done
+    
+    if [ ${#missing[@]} -ne 0 ]; then
+        echo ""
+        echo -e "${YELLOW}Warning: The following recommended tools are missing: ${missing[*]}${NC}"
+        echo -e "You can run ${CYAN}./scripts/install_packages.sh${NC} to install them."
+    fi
+    echo ""
+}
+
 echo -e "${BLUE}=====================================${NC}"
 echo -e "${BLUE}   Starting Dotfiles Installation   ${NC}"
 echo -e "${BLUE}=====================================${NC}"
 echo ""
+
+check_dependencies
 
 # 1. Link home configurations (to ~/)
 if [ -d "$DOTFILES_DIR/home" ]; then
